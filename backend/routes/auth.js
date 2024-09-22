@@ -6,7 +6,7 @@ const router = express.Router();
 
 // User signup route
 router.post("/signup", async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, role } = req.body;
   try {
     // cheking if the user already exists
     const existingUser = await User.findOne({ email });
@@ -22,6 +22,7 @@ router.post("/signup", async (req, res) => {
       name,
       email,
       password: hashPassword,
+      role,
     });
 
     // save the user

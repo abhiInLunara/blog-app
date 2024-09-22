@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const authRoutes = require("./routes/auth");
+const blogRoutes = require("./routes/blog.js");
 const auth = require("./middlewares/auth.js");
 
 dotenv.config();
@@ -11,6 +12,10 @@ const app = express();
 
 // Middle ware to pass incoming json request
 app.use(express.json());
+app.use((req, res, next) => {
+  console.log(req);
+  next();
+});
 
 // connnecting with database
 mongoose
@@ -20,6 +25,9 @@ mongoose
 
 // using auth route
 app.use("/api/auth", authRoutes);
+
+// using blog route
+app.use("/api/blogs", blogRoutes);
 
 // protected route example
 app.get("/api/protected", auth, (req, res) => {
